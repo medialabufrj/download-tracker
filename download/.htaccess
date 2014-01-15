@@ -1,0 +1,7 @@
+RewriteEngine On
+RewriteBase /download
+
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
+
+RewriteRule ^([A-Za-z0-9-_.]+)/?$ index.php?file=$1 [L]
