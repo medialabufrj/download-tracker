@@ -13,8 +13,8 @@
 	<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Titillium+Web:400,400italic,700,700italic">
 	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css">
 	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap-theme.min.css">
-	<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
 	<script src="//code.jquery.com/jquery-1.10.2.min.js"></script>
+	<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
 	<style type="text/css">
 		body {
 			font-family: 'Titillium Web', sans-serif;
@@ -43,14 +43,15 @@
 		</div>
 
 		<div id="link" style="display:none">
-			Caso o download não comece automaticamente, <a href="javascript:download('file.ext')" id="link">clique aqui</a>.
+			
 		</div>
 	</div>
 
 	<script type="text/javascript">
 
 		var time = 5;
-		var file = "<?php echo $_GET["file"]; ?>";
+		var path = "<?php echo $_GET["file"]; ?>";
+		var file = path.split('/');
 		var timer = setInterval(count,1000);
 
 		document.getElementById("contador").innerHTML = time;
@@ -58,12 +59,13 @@
 		function download() {
 			clearInterval(timer);
 			var ifrm = document.getElementById('frame');
-			ifrm.src = "download.php?path=arquivos/"+file+"&name="+file;
+			ifrm.src = "/download/download.php?path=arquivos/"+path+"&name="+file[file.length-1];
+			console.log(ifrm.src);
 		}	
 
 		function count() {
 			if(time == 1) {
-				$('#link').fadeIn(300);
+				$('#link').html('Caso o download não comece automaticamente, <a href="/download/arquivos/'+path+'" id="link">clique aqui</a>.').fadeIn(300);
 				document.getElementById("contador_texto").style.display="none";
 				download();
 			} else {
